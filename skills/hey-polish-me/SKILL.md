@@ -6,7 +6,7 @@ description: "Keeps the current selection intact while producing an evidence-bas
 <!-- type: custom-skill -->
 # Hey Polish Me
 
-**Ver:** ver.202609131000
+**Ver:** ver.202609131108
 
 Analyzes an already-finished selected frame or section and produces an improvement proposal without touching the original.
 
@@ -81,6 +81,8 @@ Never assume a skill is available when its availability can't be confirmed. In l
 ## 3.1 Choose the improvement direction
 
 Based on the availability of `cognitive-ui-design` and `create-multi-pattern`, present only the option combinations that are actually available. Never show an option that requires an unregistered or disabled skill — this avoids having to ask again after the user has already chosen.
+
+**Never collapse this into a shorter question.** Don't reduce the decision to just "how many proposals?" and relegate the cognitive-design axis to a passing mention in prose instead of an actual choice — that silently removes an available option. Every option below that's currently available must stay individually selectable, whether you ask it as one combined question or as a short sequence of questions (e.g. proposal count first, then whether to apply cognitive design to it). Before creating the proposal, confirm the user was actually able to choose whether cognitive design was applied — not just how many proposals to make.
 
 The base set of options is these four:
 
@@ -167,6 +169,15 @@ When making improvement decisions, split the grounds into these four categories.
   - Information that builds trust, supports comparison, or encourages a return visit
 - Never fabricate new facts, track record, prices, reviews, etc. without grounds.
 - If a placeholder image or content was reused, state this explicitly in the final report.
+
+## 5.1 Safe Plugin API writes and transactional creation
+
+- Before writing with the Plugin API, confirm non-obvious property names, accepted values, and object shapes in the local API typings. Do not guess property names.
+- For text decoration controls, use the current API names such as `textDecorationOffset`; `textUnderlineOffset` is unsupported and must not be used.
+- Treat proposal creation as a transaction. Give temporary and proposal copies deterministic names so a failed current run can identify its own incomplete output safely.
+- If a write fails after creating a duplicate, remove only the incomplete copy created by the current run before making at most one materially different retry.
+- Never remove or overwrite the original selection, and never delete a previously completed proposal while cleaning up a failed run.
+- After a successful write, verify the final proposal's node ID, name, position, key changed properties, and rendered appearance. Confirm that no partial duplicates from the current run remain.
 
 ## 6. Choose the final output format
 
