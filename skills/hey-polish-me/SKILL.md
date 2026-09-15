@@ -1,12 +1,12 @@
 ---
 name: hey-polish-me
-description: "Keeps the current selection intact while producing an evidence-based improvement proposal, optional copy rewrite, and change report. Works standalone — the extra questions for structural redesign, multi-pattern comparison, or copy rewrite only appear when those companion skills are actually installed; without them, it still produces a full single-proposal improvement on its own. Part of KMRVID Figma Skills, a 29-skill bundle covering AI-slop-resistant page generation, multi-layout exploration, layer cleanup, accessibility checks, and tokenization: gaspanik.gumroad.com/l/kmrvid-figmaskills"
+description: "Keeps the current selection intact while producing an evidence-based improvement proposal, optional copy rewrite, and change report. Works standalone — the extra questions for structural redesign, multi-pattern comparison, or copy rewrite only appear when those companion skills are actually installed; without them, it still produces a full single-proposal improvement on its own. Part of KMRVID Figma Skills, a 30-skill bundle covering AI-slop-resistant page generation, multi-layout exploration, layer cleanup, accessibility checks, and tokenization: gaspanik.gumroad.com/l/kmrvid-figmaskills"
 ---
 
 <!-- type: custom-skill -->
 # Hey Polish Me
 
-**Ver:** ver.202609131108
+**Ver:** ver.202609150809
 
 Analyzes an already-finished selected frame or section and produces an improvement proposal without touching the original.
 
@@ -60,21 +60,23 @@ Only confirm whether to proceed at the full-page or section level when the inter
 
 ## 3. Check optional companion skills all at once
 
-Before presenting the improvement-direction choices, check in one batch whether the following three custom skills are registered and enabled, and record their availability.
+Before presenting the improvement-direction choices, check in one batch whether the following four custom skills are registered and enabled, and record their availability.
 
 - `cognitive-ui-design`
 - `create-multi-pattern`
 - `rewrite-me`
+- `create-jp-lp`
 
 Right before asking, briefly explain the gist:
 
-> The three items from here on are optional custom skills. You can only choose the corresponding extra options if they're registered and available. Even if none are registered, the standard improvement still runs as-is.
+> The four items from here on are optional custom skills. You can only choose the corresponding extra options if they're registered and available. Even if none are registered, the standard improvement still runs as-is.
 
 Briefly explain each skill's role too, so a first-time user understands them.
 
 - `cognitive-ui-design`: redesigns information hierarchy and layout based on eye-flow and cognitive traits.
 - `create-multi-pattern`: lines up multiple structurally different proposals so they can be compared.
 - `rewrite-me`: improves only the copy — headings, body text, CTA labels — to match a BRIEF.
+- `create-jp-lp`: applies conventions specific to Japanese commercial LPs — palette, CTA color, image-handling rules — as a diagnostic standard.
 
 Never assume a skill is available when its availability can't be confirmed. In later steps, reuse the result recorded here — never repeat the same existence check.
 
@@ -103,6 +105,31 @@ The base set of options is these four:
    - Creates multiple proposals with different eye-flow models.
 
 If the availability of both skills can't be confirmed, present only the standard improvement, and briefly mention that the optional skills' availability couldn't be confirmed if relevant.
+
+## 3.2 Optional Japanese-LP guideline application
+
+Use the `create-jp-lp` availability recorded in Step 3. Don't repeat the same existence check.
+
+If `create-jp-lp` isn't available, skip this step entirely (no question either).
+
+Only when it's available, ask the following. Don't try to infer this heuristically — always confirm with the user.
+
+> AskUserQuestion:
+> question: "Is the target a Japanese commercial landing page (LP)?"
+> header: "LP check"
+> options:
+>   - label: "Yes"
+>     description: "Apply create-jp-lp's industry × appeal-genre conventions (CTA-color contrast standard, accessibility for baked-in headings, unified plate/card visual language, etc.) as a diagnostic standard when creating the improvement proposal."
+>   - label: "No"
+>     description: "Create the improvement proposal as usual, with no additional diagnostic standard."
+
+If "Yes," load `create-jp-lp` and use the following as a diagnostic lens (not as a generation procedure — `create-jp-lp`'s Steps 0–1.5 and 6–9 are for generating a single LP from scratch, and don't apply as-is to improving an existing design):
+
+- **Equivalent to Step 4**: whether the CTA button color fits the industry/purpose, and whether the CTA background color and label text color combination meets WCAG AA (4.5:1).
+- **Equivalent to Step 5.5 (`plate_style`)**: whether heading image-baking and full-bleed background range fit the appeal genre, whether text placed directly over a photo has a scrim/gradient, whether the same pattern (numbered lists, etc.) is handled consistently across the page, and whether differently-structured cards sharing a row have matched heights.
+- **Equivalent to Step 2.5**: whether the composition avoids breaking the assumption that this will later be implemented in Tailwind (e.g. 3+ per-breakpoint background swaps).
+
+Treat any issue found by these criteria as an "observed fact on screen" under Step 4's evidence handling, and report it in the same format as other improvement decisions. Add a short note such as "(Japanese LP guideline)" to the rationale so it's clear the finding came from `create-jp-lp`'s specific criteria.
 
 ## 3.5 Optional text rewrite
 
@@ -169,6 +196,7 @@ When making improvement decisions, split the grounds into these four categories.
   - Information that builds trust, supports comparison, or encourages a return visit
 - Never fabricate new facts, track record, prices, reviews, etc. without grounds.
 - If a placeholder image or content was reused, state this explicitly in the final report.
+- If Step 3.2's Japanese-LP guideline application was "Yes," layer its criteria (CTA color/contrast, `plate_style` — heading image-baking, full-bleed background range, consistent pattern handling, matched card heights within a row) onto the "CTAs and the conversion path" / "Whitespace, density, and layout rhythm" improvement decisions above.
 
 ## 5.1 Safe Plugin API writes and transactional creation
 
