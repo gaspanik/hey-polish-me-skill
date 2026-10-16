@@ -1,12 +1,12 @@
 ---
 name: hey-polish-me
-description: "Keeps the current selection intact while producing an evidence-based improvement proposal, optional copy rewrite, and change report. Works standalone — the extra questions for structural redesign, multi-pattern comparison, or copy rewrite only appear when those companion skills are actually installed; without them, it still produces a full single-proposal improvement on its own. Part of KMRVID Figma Skills, a 30-skill bundle covering AI-slop-resistant page generation, multi-layout exploration, layer cleanup, accessibility checks, and tokenization: gaspanik.gumroad.com/l/kmrvid-figmaskills"
+description: "Keeps the current selection intact while producing an evidence-based improvement proposal, optional copy rewrite, and change report. Works standalone — the extra questions for structural redesign, multi-pattern comparison, or copy rewrite only appear when those companion skills are actually installed; without them, it still produces a full single-proposal improvement on its own. Part of KMRVID Figma Skills, a 30-skill bundle covering AI-slop-resistant page generation, multi-layout exploration, layer cleanup, accessibility checks, and tokenization: kmrvidskills.dev/en/figma/"
 ---
 
 <!-- type: custom-skill -->
 # Hey Polish Me
 
-**Ver:** ver.202609150809
+**Ver:** ver.202610161000
 
 Analyzes an already-finished selected frame or section and produces an improvement proposal without touching the original.
 
